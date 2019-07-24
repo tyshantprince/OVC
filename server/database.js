@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 const db_connection = 'mongodb://mongo/ovc'
 
-var kittySchema = mongoose.Schema({
-    name: String
+var reportSchema = mongoose.Schema({
+    DoNow: [],
+    NextSteps: [],
+    Resources: []
 })
 
-Kitten = exports.Kitten = mongoose.model('Kitten', kittySchema)
+UserReport = exports.UserReport = mongoose.model('UserReport', reportSchema)
 
 exports.initializeMongo = function(){
     mongoose.connect(db_connection);
@@ -18,17 +20,19 @@ exports.initializeMongo = function(){
 
     db.once('open', function(){
         console.log('We are connected ')
-        addRandom()
+        addTestReport()
     })
 }
 
-var addRandom = function(){
-    var silence = new Kitten({
-        name: 'Silence' + Math.random()
+var addTestReport = function(){
+    var user1 = new UserReport({
+        DoNow: ["Call 911"],
+        NextSteps: [],
+        Resources: ["Visit Law for Seniors Website"]
     })
 
-    silence.save(function(err, fluffy) {
+    user1.save(function(err) {
         if(err) return console.log(err)
-        console.log('There is a new cat in the neighborhood');
+        console.log('We just helped someone');
     })
 }

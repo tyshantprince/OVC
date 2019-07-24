@@ -17,6 +17,17 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
+  QSelect,
+  QStep,
+  QStepper,
+  QStepperNavigation,
+  QTab,
+  QTabPanel,
+  QTabPanels,
+  QTabs,
+  QBanner,
+  QCard,
+  QSplitter
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -35,6 +46,17 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
+    QSelect,
+    QStep,
+    QStepper,
+    QStepperNavigation,
+    QTab,
+    QTabPanel,
+    QTabPanels,
+    QTabs,
+    QBanner,
+    QCard,
+    QSplitter
   },
   directives: {
   },

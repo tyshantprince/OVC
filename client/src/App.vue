@@ -16,22 +16,24 @@ Create new document in firestore to hold user report
 
 <template>
   <div id="q-app">
-    <router-view /> // router component for page navigation
+    <router-view />// router component for page navigation
   </div>
 </template>
 
 <script>
 import Vue from "vue"; // js framework
 import Vuex from "vuex"; // state management
-import axios from "axios"; // perform network calls
 import XLSX from "xlsx"; // reads excel sheets
+import axios from "axios";
 
+const BASE_URL = "http://localhost:3000";
 Vue.use(Vuex);
 
 export default {
   name: "App",
   store: new Vuex.Store({
-    state: {            // state holds your application wide data
+    state: {
+      // state holds your application wide data
       currentQuestionId: 1,
       doc: {}, // reference to the current report document in Firestore
       QuestionList: [],
@@ -42,7 +44,8 @@ export default {
         Resources: []
       }
     },
-    actions: { // actions are used to commit mutations
+    actions: {
+      // actions are used to commit mutations
       fetchSpreadsheet({ commit }) {
         var url =
           "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7CTrX90Sld_BejSNpYGdlt4Aty4hkBlhiY8riBUrAKLiD32-EtmxLEvZ9Jgj0zyOI0PQ7ebHOnJ6/pub?output=xlsx";
@@ -69,23 +72,26 @@ export default {
           });
       },
 
-      // newReport({ commit }) {
-      //   console.log(db);
-      //   db.collection("Reports")
-      //     .add({
-      //       DoThisNow: [],
-      //       NextSteps: [],
-      //       Resources: []
-      //     })
-      //     .then(function(docRef) {
-      //       commit("storeDocRef", docRef.id);
-      //     });
-      // },
+      newReport({ commit }) {
+        var responseData;
+
+        axios
+          .post(`${BASE_URL}/api/UserReport/create`, {
+            DoNow: [],
+            NextSteps: [],
+            Resources: []
+          })
+          .then(response => {
+            commit('storeDocRef', response.data.UserReport._id);
+          })
+          .catch(err => Promise.reject(err.message));
+
+          
+      },
 
       updateQuestion({ commit }, questionID) {
         commit("updateQuestion", questionID);
       },
-      
 
       Resource({ commit }, data) {
         commit("appendResource", data);
@@ -97,7 +103,8 @@ export default {
         commit("appendNextSteps", data);
       }
     },
-    mutations: { // mutations are what actually alter your state
+    mutations: {
+      // mutations are what actually alter your state
       loadQuestions(state, fetchedQuestions) {
         state.QuestionList = fetchedQuestions;
       },
@@ -105,37 +112,48 @@ export default {
       loadAnswers(state, fetchAnswers) {
         state.AnswerList = fetchAnswers;
       },
-      // storeDocRef(state, docID) {
-      //   state.doc = db.collection("Reports").doc(docID);
-      // },
+      storeDocRef(state, docID) {
+        state.doc = docID;
+      },
 
       updateQuestion(state, QuestionID) {
         state.currentQuestionId = QuestionID;
       },
       appendResource(state, data) {
-        // state.doc.update({
-        //   Resources: firebase.firestore.FieldValue.arrayUnion(data)
-        // });
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, { group: 'Resources', DoNow: [], NextSteps: [], Resources: data })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
+
         state.UserReport.Resources.push(data.data);
-      }, 
+      },
 
-    appendDoNow(state, data) {
-      // state.doc.update({
-      //   DoThisNow: firebase.firestore.FieldValue.arrayUnion(data)
-      // });
+      appendDoNow(state, data) {
+         axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {group: 'DoNows', DoNow: data, NextSteps: [], Resources: [] })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
 
-      state.UserReport.Resources.push(data.data);
+        state.UserReport.Resources.push(data.data);
+      },
+
+      appendNextSteps(state, data) {
+          axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, { group: 'NextSteps',DoNow: [], NextSteps: data, Resources: [] })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
+
+        state.UserReport.Resources.push(data);
+      }
     },
-
-    appendNextSteps(state, data) {
-      // state.doc.update({
-      //   NextSteps: firebase.firestore.FieldValue.arrayUnion(data)
-      // });
-
-      state.UserReport.Resources.push(data);
-    },
-    },
-    getters: { // getters allow you retrieve state within your components
+    getters: {
+      // getters allow you retrieve state within your components
       allQuestions(state) {
         return state.QuestionList;
       },
