@@ -14,10 +14,16 @@ Dynamically updates user report based on selected answers
 */
 <template>
   <q-page class="q-pa-xl">
+
+
+    <!-- Intro Section -->
+
     <div v-if="currentQuestion && currentQuestion.category == 'intro'">
       <div class="flex flex-center q-pa-sm no-wrap">
         <h2 style="color: #fff">Intro</h2>
       </div>
+
+      <!-- Question -->
 
       <div class="row justify-center items-center" style="padding: 0px !important;">
         <div class="col-12 col-sm-12 col-md-4">
@@ -28,6 +34,9 @@ Dynamically updates user report based on selected answers
           >{{ currentQuestion.question }}</h2>
         </div>
         <div class="col-xs-12 col-md-6">
+
+          <!-- If the answer is a yes or no show this -->
+
           <div class v-if="currentAnswers.length < 3">
             <q-btn
               :key="answer.id"
@@ -39,7 +48,7 @@ Dynamically updates user report based on selected answers
               rounded
               align="left"
             >
-              <div class="row q-pa-md">
+              <div class="row q-pa-md justify-center">
                 <div style>
                   <q-icon
                     v-if="index == 0"
@@ -94,6 +103,9 @@ Dynamically updates user report based on selected answers
         </q-btn>
       </div>
     </div>
+
+
+    <!-- End Of Intro Questions -->
 
     <div class v-else-if="currentQuestion && currentQuestion.category != 'intro'">
       <div class="q-pa-md">

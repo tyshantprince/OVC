@@ -27,7 +27,11 @@ import {
   QTabs,
   QBanner,
   QCard,
-  QSplitter
+  QSplitter,
+  QCarousel,
+  QCarouselControl,
+  QCarouselSlide,
+  QBtnToggle
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -56,7 +60,12 @@ Vue.use(Quasar, {
     QTabs,
     QBanner,
     QCard,
-    QSplitter
+    QSplitter,
+    QCarousel,
+    QCarouselControl,
+    QCarouselSlide,
+    QBtnToggle
+
   },
   directives: {
   },

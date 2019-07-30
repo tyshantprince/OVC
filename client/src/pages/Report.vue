@@ -2,490 +2,141 @@
 <template>
   <q-page class="q-pa-xl">
     <div class="summary">
-      <q-banner class="bg-grey-3">
-        <template v-slot:avatar>
-          <q-icon name="notifications_active" color="teal" />
-        </template>
-        <h5>
-          Based on the answers you chose, it looks like your are having issues
-          with
-        </h5>
-        <div
-          class="text-h6"
-          v-for="(category, index) in categories"
-          :key="index"
-        >
-          {{ category }}
+      <div class="row justify-center">
+        <div class="col-12 text-center">
+          <q-banner class style="background-color: #21c2b6; color: #fff">
+            <h5 style="color: #fff">
+              It sounds like you might have a problem with safety and finances.
+              <br />Here is some information that might help address your needs.
+            </h5>
+          </q-banner>
         </div>
 
-        <template v-slot:action>
-          <q-btn flat color="teal" label="Turn on Wifi" />
-        </template>
-      </q-banner>
-    </div>
-    <div class="q-pa-md">
-      <div class="q-gutter-y-md" style="max-width: 100%">
-        <q-card>
-          <q-tabs
-            v-model="category"
-            dense
-            class="bg-grey-3 text-grey-7"
-            active-color="teal"
-            indicator-color="teal"
-            align="justify"
-            @input="changeToDoThisNow"
-          >
-            <q-tab
-              v-for="(category, index) in categories"
-              :key="index"
-              :name="category"
-              :label="category"
-            >
-            </q-tab>
-          </q-tabs>
+        <!-- Side Buttons -->
 
-          <q-tab-panels v-model="category" animated class="bg-teal text-teal">
-            <q-tab-panel name="Safety">
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical :switch-indicator="true">
-                    <q-tab v-if="userReport.Safety.DoThisNow.length > 0"
-                      class="text-white"
-                      name="DoThisNow"
-                      icon="mail"
-                      label="DoThisNow"
-                    />
-                    <q-tab
-                      v-if="userReport.Safety.NextSteps.length > 0"
-                      class="text-white"
-                      name="NextSteps"
-                      icon="alarm"
-                      label="NextSteps"
-                    />
-                    <q-tab
-                    v-if="userReport.Safety.Resources.length > 0"
-                      class="text-white"
-                      name="Resources"
-                      icon="movie"
-                      label="Resources"
-                    />
-                  </q-tabs>
-                </template>
+        <div class="row">
+          <div class="col-2">
+            <div class="column items-center">
+              <div class="q-pa-xl">
+                <q-btn
+                  :unelevated="true"
+                  color="white"
+                  text-color="purple"
+                  round
+                  icon="security"
+                  dense
+                  size="3rem"
+                ></q-btn>
+              </div>
 
-                <template v-slot:after>
-                  <q-tab-panels
-                    v-model="tab"
-                    animated
-                    swipeable
-                    class="bg-teal text-teal"
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel name="DoThisNow">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">DoThisNow</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Safety.DoThisNow"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
+              <div class="q-pa-xl">
+                <q-btn
+                  :unelevated="true"
+                  color="white"
+                  text-color="purple"
+                  round
+                  icon="monetization_on"
+                  dense
+                  size="3rem"
+                ></q-btn>
+              </div>
+            </div>
+          </div>
 
-                    <q-tab-panel name="NextSteps">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">NextSteps</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Safety.NextSteps"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
+          <!--  Report Content -->
 
-                    <q-tab-panel name="Resources">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">Resources</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Safety.Resources"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-                  </q-tab-panels>
-                </template>
-              </q-splitter>
-            </q-tab-panel>
+          <div class="col-10" style="background-color: #fff">
+            <div class="row">
+              <div class="col-10">
+                <q-carousel
+                  v-model="slide"
+                  transition-prev="slide-right"
+                  transition-next="slide-left"
+                  animated
+                  control-color="primary"
+                  class="rounded-borders"
+                >
+                  <q-carousel-slide name="safety" class="column no-wrap flex-center">
+                    <div class style="background-color: #fff;">
+                      <div class="q-pa-lg">
+                        <div class="text-body1">
+                          A saftey plan is a personalized, practical plan that includes waus to
+                          remain safe while in a relationship, planning to leave, or after you leave.
+                          Safety planning involves how to cope with emotions, tell friends, and family about the abuse,
+                          take legal action and more.
+                        </div>
+                      </div>
 
-            <q-tab-panel name="Finance">
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical :switch-indicator="true">
-                    <q-tab v-if="userReport.Finance.DoThisNow.length > 0"
-                      class="text-white"
-                      name="DoThisNow"
-                      icon="mail"
-                      label="DoThisNow"
-                    />
-                    <q-tab
-                      v-if="userReport.Finance.NextSteps.length > 0"
-                      class="text-white"
-                      name="NextSteps"
-                      icon="alarm"
-                      label="NextSteps"
-                    />
-                    <q-tab
-                    v-if="userReport.Finance.Resources.length > 0"
-                      class="text-white"
-                      name="Resources"
-                      icon="movie"
-                      label="Resources"
-                    />
-                  </q-tabs>
-                </template>
+                      <div class="q-pa-lg">
+                        <div class="text-body1">
+                          A good safety plan will have all of the vital information you need and be taulored to your unique situation.,
+                          and will help walk you through different scenarios.
+                        </div>
+                      </div>
 
-                <template v-slot:after>
-                  <q-tab-panels
-                    v-model="tab"
-                    animated
-                    swipeable
-                    class="bg-teal text-teal"
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel name="DoThisNow">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">DoThisNow</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Finance.DoThisNow"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
+                      <div class="q-pa-lg">
+                        <div class="text-body1">
+                          Although some of the things that you outline in your safety plan may seem obvious, its important to remeber
+                          that in moments of crisis your brain doesn't function the same way as when your are calm.
+                          When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions
+                          about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.`
+                        </div>
+                      </div>
+                    </div>
+                  </q-carousel-slide>
 
-                    <q-tab-panel name="NextSteps">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">NextSteps</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Finance.NextSteps"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
+                  <q-carousel-slide name="finances" class="column no-wrap flex-center">
+                    <div class="q-mt-md text-center">{{ lorem }}</div>
+                  </q-carousel-slide>
+                </q-carousel>
+              </div>
 
-                    <q-tab-panel name="Resources">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">Resources</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Finance.Resources"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-                  </q-tab-panels>
-                </template>
-              </q-splitter>
-            </q-tab-panel>
+              <div class="col-2">
+                <div class="column items-start justify-center">
+                  <div class="col-3 q-pa-sm">
+                    <q-btn
+                      style="height: 80px; width: 175px"
+                      label="About your Situation"
+                      :unelevated="true"
+                      color="purple"
+                      text-color="white"
+                    ></q-btn>
+                  </div>
 
-            <q-tab-panel name="Housing">
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical :switch-indicator="true">
-                    <q-tab v-if="userReport.Housing.DoThisNow > 0"
-                      class="text-white"
-                      name="DoThisNow"
-                      icon="mail"
-                      label="DoThisNow"
-                    />
-                    <q-tab
-                      v-if="userReport.Housing.NextSteps > 0"
-                      class="text-white"
-                      name="NextSteps"
-                      icon="alarm"
-                      label="NextSteps"
-                    />
-                    <q-tab
-                    v-if="userReport.Housing.Resources > 0"
-                      class="text-white"
-                      name="Resources"
-                      icon="movie"
-                      label="Resources"
-                    />
-                  </q-tabs>
-                </template>
+                  <div class="col-3 q-pa-sm">
+                    <q-btn
+                      style="height: 80px; width: 175px"
+                      :unelevated="true"
+                      label="Next Steps"
+                      color="purple"
+                      text-color="white"
+                    ></q-btn>
+                  </div>
 
-                <template v-slot:after>
-                  <q-tab-panels
-                    v-model="tab"
-                    animated
-                    swipeable
-                    class="bg-teal text-teal"
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel name="DoThisNow">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">DoThisNow</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Housing.DoThisNow"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
+                  <div class="col-3 q-pa-sm">
+                    <q-btn
+                      style="height: 80px; width: 175px"
+                      :unelevated="true"
+                      label="Where to find Help"
+                      color="purple"
+                      text-color="white"
+                    ></q-btn>
+                  </div>
 
-                    <q-tab-panel name="NextSteps">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">NextSteps</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Housing.NextSteps"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-
-                    <q-tab-panel name="Resources">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">Resources</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Housing.Resources"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-                  </q-tab-panels>
-                </template>
-              </q-splitter>
-            </q-tab-panel>
-
-            <q-tab-panel name="Family Life">
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical :switch-indicator="true">
-                    <q-tab v-if="userReport.Family.DoThisNow > 0"
-                      class="text-white"
-                      name="DoThisNow"
-                      icon="mail"
-                      label="DoThisNow"
-                    />
-                    <q-tab
-                      v-if="userReport.Family.NextSteps > 0"
-                      class="text-white"
-                      name="NextSteps"
-                      icon="alarm"
-                      label="NextSteps"
-                    />
-                    <q-tab
-                    v-if="userReport.Family.Resources > 0"
-                      class="text-white"
-                      name="Resources"
-                      icon="movie"
-                      label="Resources"
-                    />
-                  </q-tabs>
-                </template>
-
-                <template v-slot:after>
-                  <q-tab-panels
-                    v-model="tab"
-                    animated
-                    swipeable
-                    class="bg-teal text-teal"
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel name="DoThisNow">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">DoThisNow</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Family.DoThisNow"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-
-                    <q-tab-panel name="NextSteps">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">NextSteps</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Family.NextSteps"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-
-                    <q-tab-panel name="Resources">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">Resources</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.Family.Resources"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-                  </q-tab-panels>
-                </template>
-              </q-splitter>
-            </q-tab-panel>
-
-            <q-tab-panel name="VictimRights">
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical :switch-indicator="true">
-                    <q-tab v-if="userReport.VictimRights.DoThisNow.length > 0"
-                      class="text-white"
-                      name="DoThisNow"
-                      icon="mail"
-                      label="DoThisNow"
-                    />
-                    <q-tab
-                      v-if="userReport.VictimRights.NextSteps.length > 0"
-                      class="text-white"
-                      name="NextSteps"
-                      icon="alarm"
-                      label="NextSteps"
-                    />
-                    <q-tab
-                    v-if="userReport.VictimRights.Resources.length > 0"
-                      class="text-white"
-                      name="Resources"
-                      icon="movie"
-                      label="Resources"
-                    />
-                  </q-tabs>
-                </template>
-
-                <template v-slot:after>
-                  <q-tab-panels
-                    v-model="tab"
-                    animated
-                    swipeable
-                    class="bg-teal text-teal"
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel name="DoThisNow">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">DoThisNow</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.VictimRights.DoThisNow"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-
-                    <q-tab-panel name="NextSteps">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">NextSteps</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.VictimRights.NextSteps"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-
-                    <q-tab-panel name="Resources">
-                      <q-card class="my-card">
-                        <q-card-section>
-                          <div class="text-h4 q-mb-md text-teal">Resources</div>
-                        </q-card-section>
-                        <q-card-section>
-                          <li
-                            v-for="(data, i) in userReport.VictimRights.Resources"
-                            :key="i"
-                          >
-                            {{ data }}
-                          </li>
-                        </q-card-section>
-                      </q-card>
-                    </q-tab-panel>
-                  </q-tab-panels>
-                </template>
-              </q-splitter>
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card>
+                  <div class="col-3 q-pa-sm">
+                    <q-btn
+                      style="height: 80px; width: 175px"
+                      :unelevated="true"
+                      label="Get More Information"
+                      color="purple"
+                      text-color="white"
+                    ></q-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
@@ -499,37 +150,27 @@ export default {
   name: "PageReport",
   data() {
     return {
-      category: "Safety",
-      tab: "DoThisNow",
-      splitterModel: 20
+      slide: "safety",
+      lorem: `A saftey plan is a personalized, practical plan that includes waus to 
+remain safe while in a relationship, planning to leave, or after you leave. 
+Safety planning involves how to cope with emotions, tell friends, and family about the abuse,
+take legal action and more. \n
+
+
+A good safety plan will have all of the vital information you need and be taulored to your unique situation.,
+and will help walk you through different scenarios. \n
+
+Althoug some of the things that you outline in your safety plan may seem obvious, its important to remeber
+that in moments of crisis your brain doesn't function the same way as when your are calm.
+When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions
+about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.`
     };
   },
-  methods: {
-    changeToDoThisNow() {
-      this.tab = "DoThisNow";
-    }
-  },
+  methods: {},
   computed: {
     ...mapGetters({
       userReport: "getUserReport"
-    }),
-    categories() {
-      var cats = [];
-      for (const category in this.userReport) {
-        if (this.userReport.hasOwnProperty(category)) {
-          const element = this.userReport[category];
-          for (const data in element) {
-            if (element.hasOwnProperty(data)) {
-              const element2 = element[data];
-              if (element2.length != 0) cats.push(category);
-            }
-          }
-        }
-      }
-      return cats.filter(function(value, index, self) {
-        return self.indexOf(value) === index;
-      });
-    }
+    })
   }
 };
 </script>
