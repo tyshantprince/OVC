@@ -26,6 +26,7 @@
                   icon="security"
                   dense
                   size="3rem"
+                  @click="changePanel('safety')"
                 ></q-btn>
               </div>
 
@@ -38,6 +39,7 @@
                   icon="monetization_on"
                   dense
                   size="3rem"
+                  @click="changePanel('finance')"
                 ></q-btn>
               </div>
             </div>
@@ -49,6 +51,7 @@
             <div class="row">
               <div class="col-10">
                 <q-carousel
+                  ref="report"
                   v-model="slide"
                   transition-prev="slide-right"
                   transition-next="slide-left"
@@ -56,40 +59,32 @@
                   control-color="primary"
                   class="rounded-borders"
                 >
-                  <q-carousel-slide name="safety" class="column no-wrap flex-center">
-                    <div class style="background-color: #fff;">
-                      <div class="q-pa-lg">
-                        <div class="text-body1">
-                          A saftey plan is a personalized, practical plan that includes waus to
-                          remain safe while in a relationship, planning to leave, or after you leave.
-                          Safety planning involves how to cope with emotions, tell friends, and family about the abuse,
-                          take legal action and more.
-                        </div>
-                      </div>
+                <q-carousel-slide v-for="(category, id) in UserReport"
+                :name="id"
+                :key="id"
+                class="column no-wrap flex-center"
+                >
 
-                      <div class="q-pa-lg">
-                        <div class="text-body1">
-                          A good safety plan will have all of the vital information you need and be taulored to your unique situation.,
-                          and will help walk you through different scenarios.
-                        </div>
-                      </div>
+                <div class style="background-color: #fff;">
 
-                      <div class="q-pa-lg">
-                        <div class="text-body1">
-                          Although some of the things that you outline in your safety plan may seem obvious, its important to remeber
-                          that in moments of crisis your brain doesn't function the same way as when your are calm.
-                          When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions
-                          about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.`
-                        </div>
-                      </div>
-                    </div>
-                  </q-carousel-slide>
+                  <!-- About your situation -->
+                  <div class="" v-if=" topic == 'about'">
+                     <div  class="text-body q-pa-md" style="" v-for="(text, id) in current_about" :key="id">
+                    {{ text }}
+                  </div>
+                  </div>
 
-                  <q-carousel-slide name="finances" class="column no-wrap flex-center">
-                    <div class="q-mt-md text-center">{{ lorem }}</div>
-                  </q-carousel-slide>
+
+                     <div class="" v-if=" topic == 'nextSteps'">
+                     <div  class="text-body q-pa-md" style="" v-for="(text, id) in current_about" :key="id">
+                    {{ text }}
+                  </div>
+                  </div>
+                 
+                </div>
+                </q-carousel-slide>
                 </q-carousel>
-              </div>
+              </div> 
 
               <div class="col-2">
                 <div class="column items-start justify-center">
@@ -151,26 +146,26 @@ export default {
   data() {
     return {
       slide: "safety",
-      lorem: `A saftey plan is a personalized, practical plan that includes waus to 
-remain safe while in a relationship, planning to leave, or after you leave. 
-Safety planning involves how to cope with emotions, tell friends, and family about the abuse,
-take legal action and more. \n
+      topic: 'about'
 
-
-A good safety plan will have all of the vital information you need and be taulored to your unique situation.,
-and will help walk you through different scenarios. \n
-
-Althoug some of the things that you outline in your safety plan may seem obvious, its important to remeber
-that in moments of crisis your brain doesn't function the same way as when your are calm.
-When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions
-about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.`
-    };
+       };
   },
-  methods: {},
+  methods: {
+    changePanel(name){
+      this.$refs.report.goTo(name);
+    }
+  },
   computed: {
     ...mapGetters({
-      userReport: "getUserReport"
-    })
+      UserReport: "getUserReport"
+    }),
+    current_about(){
+      return this.UserReport[this.slide].about.split("<br>")
+    },
+
+    current_nextSteps(){
+      return this.UserReport[this.slide].nextSteps;
+    }
   }
 };
 </script>

@@ -16,7 +16,7 @@ Create new document in firestore to hold user report
 
 <template>
   <div id="q-app">
-    <router-view />// router component for page navigation
+    <router-view />
   </div>
 </template>
 
@@ -39,17 +39,43 @@ export default {
       QuestionList: [],
       AnswerList: [],
       UserReport: {
-        DothisNow: [],
-        NextSteps: [],
-        Resources: []
+        safety: {
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+          NextSteps: [],
+          FindHelp: [],
+          MoreInfo: []
+        },
+        finance: {
+          about: "",
+          NextSteps: [],
+          FindHelp: [],
+          MoreInfo: []
+        },
+        housing: {
+          about: "",
+          NextSteps: [],
+          FindHelp: [],
+          MoreInfo: []
+        },
+        family: {
+          about: "",
+          NextSteps: [],
+          FindHelp: [],
+          MoreInfo: []
+        },
+        victim: {
+          about: "",
+          NextSteps: [],
+          FindHelp: [],
+          MoreInfo: []
+        }
       }
     },
     actions: {
       // actions are used to commit mutations
       fetchSpreadsheet({ commit }) {
-        var url =
+        var url = 
           "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7CTrX90Sld_BejSNpYGdlt4Aty4hkBlhiY8riBUrAKLiD32-EtmxLEvZ9Jgj0zyOI0PQ7ebHOnJ6/pub?output=xlsx";
-
         axios(url, { responseType: "arraybuffer" })
           .catch(function(err) {
             /* error in getting data */
@@ -73,31 +99,54 @@ export default {
       },
 
       newReport({ commit }) {
-        var responseData;
-
         axios
           .post(`${BASE_URL}/api/UserReport/create`, {
-            DoNow: [],
-            NextSteps: [],
-            Resources: []
+            safety: {
+              NextSteps: [],
+              FindHelp: [],
+              MoreInfo: []
+            },
+            intro: {
+        NextSteps: [],
+        FindHelp: [],
+        MoreInfo: []
+      },
+            finance: {
+              NextSteps: [],
+              FindHelp: [],
+              MoreInfo: []
+            },
+            housing: {
+              NextSteps: [],
+              FindHelp: [],
+              MoreInfo: []
+            },
+            family: {
+              NextSteps: [],
+              FindHelp: [],
+              MoreInfo: []
+            },
+            victim: {
+              NextSteps: [],
+              FindHelp: [],
+              MoreInfo: []
+            }
           })
           .then(response => {
-            commit('storeDocRef', response.data.UserReport._id);
+            commit("storeDocRef", response.data.UserReport._id);
           })
           .catch(err => Promise.reject(err.message));
-
-          
       },
 
       updateQuestion({ commit }, questionID) {
         commit("updateQuestion", questionID);
       },
 
-      Resource({ commit }, data) {
-        commit("appendResource", data);
+      MoreInfo({ commit }, data) {
+        commit("appendMoreInfo", data);
       },
-      DoNow({ commit }, data) {
-        commit("appendDoNow", data);
+      FindHelp({ commit }, data) {
+        commit("appendFindHelp", data);
       },
       NextSteps({ commit }, data) {
         commit("appendNextSteps", data);
@@ -119,37 +168,98 @@ export default {
       updateQuestion(state, QuestionID) {
         state.currentQuestionId = QuestionID;
       },
-      appendResource(state, data) {
+      appendMoreInfo(state, data) {
         axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, { group: 'Resources', DoNow: [], NextSteps: [], Resources: data })
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "MoreInfo",
+            data: data.data
+          })
           .then(response => {
             return response.data;
           })
           .catch(err => Promise.reject(err.message));
 
-        state.UserReport.Resources.push(data.data);
+        switch(data.category){
+          case 'safety':
+            state.UserReport.safety.MoreInfo.push(data.data);
+            break;
+          case 'finance':
+            state.UserReport.finance.MoreInfo.push(data.data);
+            break;
+          case 'housing':
+            state.UserReport.housing.MoreInfo.push(data.data);
+            break;
+          case 'family':
+            state.UserReport.family.MoreInfo.push(data.data);
+            break;
+          case 'victim':
+            state.UserReport.victim.MoreInfo.push(data.data);
+            break;
+        }
+
       },
 
-      appendDoNow(state, data) {
-         axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {group: 'DoNows', DoNow: data, NextSteps: [], Resources: [] })
+      appendFindHelp(state, data) {
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "FindHelp",
+            FindHelp: data.data,
+          })
           .then(response => {
             return response.data;
           })
           .catch(err => Promise.reject(err.message));
 
-        state.UserReport.Resources.push(data.data);
+        switch(data.category){
+          case 'safety':
+            state.UserReport.safety.FindHelp.push(data.data);
+            break;
+          case 'finance':
+            state.UserReport.finance.FindHelp.push(data.data);
+            break;
+          case 'housing':
+            state.UserReport.housing.FindHelp.push(data.data);
+            break;
+          case 'family':
+            state.UserReport.family.FindHelp.push(data.data);
+            break;
+          case 'victim':
+            state.UserReport.victim.FindHelp.push(data.data);
+            break;
+        }
       },
 
       appendNextSteps(state, data) {
-          axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, { group: 'NextSteps',DoNow: [], NextSteps: data, Resources: [] })
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "NextSteps",
+            NextSteps: data.data,
+          })
           .then(response => {
             return response.data;
           })
           .catch(err => Promise.reject(err.message));
 
-        state.UserReport.Resources.push(data);
+        switch(data.category){
+          case 'safety':
+            state.UserReport.safety.NextSteps.push(data.data);
+            break;
+          case 'finance':
+            state.UserReport.finance.NextSteps.push(data.data);
+            break;
+          case 'housing':
+            state.UserReport.housing.NextSteps.push(data.data);
+            break;
+          case 'family':
+            state.UserReport.family.NextSteps.push(data.data);
+            break;
+          case 'victim':
+            state.UserReport.victim.NextSteps.push(data.data);
+            break;
+        }
       }
     },
     getters: {

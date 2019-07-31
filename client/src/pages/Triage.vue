@@ -292,13 +292,13 @@ export default {
         this.$router.push("report");
       }
       if (answer.resources) {
-        this.$store.dispatch("Resource", {
+        this.$store.dispatch("FindHelp", {
           data: answer.resources,
           category: answer.category
         });
       }
       if (answer.DoThisNow) {
-        this.$store.dispatch("DoNow", {
+        this.$store.dispatch("MoreInfo", {
           data: answer.DoThisNow,
           category: answer.category
         });
