@@ -4,8 +4,6 @@ services:
     container_name: node-express
     restart: always
     build: ./server
-    volumes:
-      - ./server:/usr/src/app
     command: node index.js
     ports:
       - '3000:3000'

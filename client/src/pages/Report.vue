@@ -6,7 +6,13 @@
         <div class="col-12 text-center">
           <q-banner class style="background-color: #21c2b6; color: #fff">
             <h5 style="color: #fff">
-              It sounds like you might have a problem with safety and finances.
+              It sounds like you might have a problem with
+              <span
+                class="text-bold text-h4"
+                v-for="category in categories"
+                :key="category"
+              >{{" " + category + ", " }}</span>
+
               <br />Here is some information that might help address your needs.
             </h5>
           </q-banner>
@@ -17,29 +23,16 @@
         <div class="row">
           <div class="col-2">
             <div class="column items-center">
-              <div class="q-pa-xl">
+              <div class="q-pa-xl" v-for="(category) in categories" :key="category">
                 <q-btn
                   :unelevated="true"
                   color="white"
                   text-color="purple"
                   round
-                  icon="security"
+                  :icon="icons[category]"
                   dense
                   size="3rem"
-                  @click="changePanel('safety')"
-                ></q-btn>
-              </div>
-
-              <div class="q-pa-xl">
-                <q-btn
-                  :unelevated="true"
-                  color="white"
-                  text-color="purple"
-                  round
-                  icon="monetization_on"
-                  dense
-                  size="3rem"
-                  @click="changePanel('finance')"
+                  @click="changePanel(category)"
                 ></q-btn>
               </div>
             </div>
@@ -47,84 +40,111 @@
 
           <!--  Report Content -->
 
-          <div class="col-10" style="background-color: #fff">
+          <div class="col-10" style="background-color: #fff; height: fit-content; ">
             <div class="row">
-              <div class="col-10">
+              <div class="col-10" style="flex-basis: 83% !important;">
                 <q-carousel
                   ref="report"
                   v-model="slide"
                   transition-prev="slide-right"
                   transition-next="slide-left"
                   animated
+                  height="auto"
                   control-color="primary"
                   class="rounded-borders"
                 >
-                <q-carousel-slide v-for="(category, id) in UserReport"
-                :name="id"
-                :key="id"
-                class="column no-wrap flex-center"
-                >
+                  <q-carousel-slide
+                    v-for="(category, id) in UserReport"
+                    :name="id"
+                    :key="id"
+                    class="column no-wrap flex-center"
+                    style=""
+                  >
+                    <div class="col" style="background-color: #fff; min-height: 25rem ; min-width: 70rem;">
+                      <!-- About your situation -->
+                      <div class v-if=" topic == 'About'">
+                        <div
+                          class="text-body q-pa-lg"
+                          style
+                          v-for="(text, id) in current_about"
+                          :key="id"
+                        >{{ text }}</div>
+                      </div>
 
-                <div class style="background-color: #fff;">
+                      <div class v-if=" topic == 'NextSteps'">
+                        <div
+                          class="text-body q-pa-lg"
+                          style
+                          v-for="(nextStep, id) in UserReport[slide].NextSteps"
+                          :key="id"
+                        >{{ nextStep }}</div>
+                      </div>
 
-                  <!-- About your situation -->
-                  <div class="" v-if=" topic == 'about'">
-                     <div  class="text-body q-pa-md" style="" v-for="(text, id) in current_about" :key="id">
-                    {{ text }}
-                  </div>
-                  </div>
+                      <div class v-if=" topic == 'FindHelp'">
+                        <div
+                          class="text-body q-pa-lg"
+                          style
+                          v-for="(findHelp, id) in UserReport[slide].FindHelp"
+                          :key="id"
+                        >{{ findHelp }}</div>
+                      </div>
 
-
-                     <div class="" v-if=" topic == 'nextSteps'">
-                     <div  class="text-body q-pa-md" style="" v-for="(text, id) in current_about" :key="id">
-                    {{ text }}
-                  </div>
-                  </div>
-                 
-                </div>
-                </q-carousel-slide>
+                      <div class v-if=" topic == 'MoreInfo'">
+                        <div
+                          class="text-body q-pa-lg"
+                          style
+                          v-for="(moreInfo, id) in UserReport[slide].MoreInfo"
+                          :key="id"
+                        >{{ moreInfo }}</div>
+                      </div>
+                    </div>
+                  </q-carousel-slide>
                 </q-carousel>
-              </div> 
+              </div>
 
               <div class="col-2">
-                <div class="column items-start justify-center">
+                <div class="column items-center justify-center">
                   <div class="col-3 q-pa-sm">
                     <q-btn
-                      style="height: 80px; width: 175px"
-                      label="About your Situation"
+                      style="height: 90px; width: 200px"
+                      label="About our Situation"
                       :unelevated="true"
                       color="purple"
                       text-color="white"
+                      @click="topic = 'About'"
                     ></q-btn>
                   </div>
 
                   <div class="col-3 q-pa-sm">
                     <q-btn
-                      style="height: 80px; width: 175px"
+                      style="height: 90px; width: 200px"
                       :unelevated="true"
                       label="Next Steps"
                       color="purple"
                       text-color="white"
+                      @click="topic = 'NextSteps'"
                     ></q-btn>
                   </div>
 
                   <div class="col-3 q-pa-sm">
                     <q-btn
-                      style="height: 80px; width: 175px"
+                      style="height: 90px; width: 200px"
                       :unelevated="true"
                       label="Where to find Help"
                       color="purple"
                       text-color="white"
+                      @click="topic = 'FindHelp'"
                     ></q-btn>
                   </div>
 
                   <div class="col-3 q-pa-sm">
                     <q-btn
-                      style="height: 80px; width: 175px"
+                      style="height: 90px; width: 200px"
                       :unelevated="true"
                       label="Get More Information"
                       color="purple"
                       text-color="white"
+                      @click="topic = 'MoreInfo'"
                     ></q-btn>
                   </div>
                 </div>
@@ -141,17 +161,25 @@
 
 <script>
 import { mapGetters } from "vuex";
+import _ from "lodash";
+
 export default {
   name: "PageReport",
   data() {
     return {
       slide: "safety",
-      topic: 'about'
-
-       };
+      topic: "About",
+      icons: {
+        safety: "local_hospital",
+        finance: "monetization_on",
+        housing: "domain",
+        family: "child_friendly",
+        victim: "security"
+      }
+    };
   },
   methods: {
-    changePanel(name){
+    changePanel(name) {
       this.$refs.report.goTo(name);
     }
   },
@@ -159,12 +187,24 @@ export default {
     ...mapGetters({
       UserReport: "getUserReport"
     }),
-    current_about(){
-      return this.UserReport[this.slide].about.split("<br>")
+    current_about() {
+      return this.UserReport[this.slide].about.split("<br>");
     },
 
-    current_nextSteps(){
+    current_nextSteps() {
       return this.UserReport[this.slide].nextSteps;
+    },
+
+    categories() {
+      return _.map(this.UserReport, (value, key) => {
+        if (
+          value.FindHelp.length != 0 ||
+          value.MoreInfo.length != 0 ||
+          value.NextSteps.length != 0
+        ) {
+          return key;
+        }
+      }).filter(el => el != null);
     }
   }
 };

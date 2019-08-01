@@ -46,25 +46,25 @@ export default {
           MoreInfo: []
         },
         finance: {
-          about: "",
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
         housing: {
-          about: "",
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
         family: {
-          about: "",
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
         victim: {
-          about: "",
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
@@ -169,16 +169,16 @@ export default {
         state.currentQuestionId = QuestionID;
       },
       appendMoreInfo(state, data) {
-        axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-            category: data.category,
-            group: "MoreInfo",
-            data: data.data
-          })
-          .then(response => {
-            return response.data;
-          })
-          .catch(err => Promise.reject(err.message));
+        // axios
+        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+        //     category: data.category,
+        //     group: "MoreInfo",
+        //     data: data.data
+        //   })
+        //   .then(response => {
+        //     return response.data;
+        //   })
+        //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'safety':
@@ -201,16 +201,16 @@ export default {
       },
 
       appendFindHelp(state, data) {
-        axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-            category: data.category,
-            group: "FindHelp",
-            FindHelp: data.data,
-          })
-          .then(response => {
-            return response.data;
-          })
-          .catch(err => Promise.reject(err.message));
+        // axios
+        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+        //     category: data.category,
+        //     group: "FindHelp",
+        //     FindHelp: data.data,
+        //   })
+        //   .then(response => {
+        //     return response.data;
+        //   })
+        //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'safety':
@@ -232,16 +232,16 @@ export default {
       },
 
       appendNextSteps(state, data) {
-        axios
-          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-            category: data.category,
-            group: "NextSteps",
-            NextSteps: data.data,
-          })
-          .then(response => {
-            return response.data;
-          })
-          .catch(err => Promise.reject(err.message));
+        // axios
+        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+        //     category: data.category,
+        //     group: "NextSteps",
+        //     NextSteps: data.data,
+        //   })
+        //   .then(response => {
+        //     return response.data;
+        //   })
+        //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'safety':
