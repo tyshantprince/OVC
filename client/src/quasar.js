@@ -31,7 +31,9 @@ import {
   QCarousel,
   QCarouselControl,
   QCarouselSlide,
-  QBtnToggle
+  QBtnToggle,
+  QCardSection,
+  QCardActions
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -64,7 +66,9 @@ Vue.use(Quasar, {
     QCarousel,
     QCarouselControl,
     QCarouselSlide,
-    QBtnToggle
+    QBtnToggle,
+    QCardSection,
+    QCardActions
 
   },
   directives: {
