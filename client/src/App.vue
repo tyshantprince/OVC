@@ -39,32 +39,32 @@ export default {
       QuestionList: [],
       AnswerList: [],
       UserReport: {
-        safety: {
-          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+        Safety: {
+          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios.`,
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
-        finance: {
-          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+        Finance: {
+          about: '',
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
-        housing: {
-          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+        Housing: {
+          about: '',
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
-        family: {
-          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+        Family: {
+          about: '',
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
         },
-        victim: {
-          about: `A saftey plan is a personalized, practical plan that includes ways to remain safe while in a relationship, planning to leave, or after you leave. Safety planning involves how to cope with emotions, tell friends, and family about the abuse,take legal action and more. <br> A good safety plan will have all of the vital information you need and be tilored to your unique situation, and will help walk you through different scenarios. <br> Although some of the things that you outline in your safety plan may seem obvious, its important to remeberthat in moments of crisis your brain doesn't function the same way as when your are calm.When adrenaline is pumping through your veins it can be hrad to think clearly or make logical decisions about your safety. Having a safety plan laid out in advance can help protect yourself in those stressful moments.<br>`,
+        VictimRights: {
+          about: '',
           NextSteps: [],
           FindHelp: [],
           MoreInfo: []
@@ -75,7 +75,7 @@ export default {
       // actions are used to commit mutations
       fetchSpreadsheet({ commit }) {
         var url = 
-          "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7CTrX90Sld_BejSNpYGdlt4Aty4hkBlhiY8riBUrAKLiD32-EtmxLEvZ9Jgj0zyOI0PQ7ebHOnJ6/pub?output=xlsx";
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vSQz9V3t_yg_yCYRKQlWfgEF5FNTugCmzGKNR2oWARQlCX63I9aodluv0Txr7Kcyw/pub?output=xlsx";
         axios(url, { responseType: "arraybuffer" })
           .catch(function(err) {
             /* error in getting data */
@@ -101,7 +101,7 @@ export default {
       newReport({ commit }) {
         axios
           .post(`${BASE_URL}/api/UserReport/create`, {
-            safety: {
+            Safety: {
               NextSteps: [],
               FindHelp: [],
               MoreInfo: []
@@ -111,22 +111,22 @@ export default {
         FindHelp: [],
         MoreInfo: []
       },
-            finance: {
+            Finance: {
               NextSteps: [],
               FindHelp: [],
               MoreInfo: []
             },
-            housing: {
+            Housing: {
               NextSteps: [],
               FindHelp: [],
               MoreInfo: []
             },
-            family: {
+            Family: {
               NextSteps: [],
               FindHelp: [],
               MoreInfo: []
             },
-            victim: {
+            VictimRights: {
               NextSteps: [],
               FindHelp: [],
               MoreInfo: []
@@ -181,20 +181,20 @@ export default {
         //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
-          case 'safety':
-            state.UserReport.safety.MoreInfo.push(data.data);
+          case 'Safety':
+            state.UserReport.Safety.MoreInfo.push(data.data);
             break;
-          case 'finance':
-            state.UserReport.finance.MoreInfo.push(data.data);
+          case 'Finance':
+            state.UserReport.Finance.MoreInfo.push(data.data);
             break;
-          case 'housing':
-            state.UserReport.housing.MoreInfo.push(data.data);
+          case 'Housing':
+            state.UserReport.Housing.MoreInfo.push(data.data);
             break;
-          case 'family':
-            state.UserReport.family.MoreInfo.push(data.data);
+          case 'Family':
+            state.UserReport.Family.MoreInfo.push(data.data);
             break;
-          case 'victim':
-            state.UserReport.victim.MoreInfo.push(data.data);
+          case 'VictimRights':
+            state.UserReport.VictimRights.MoreInfo.push(data.data);
             break;
         }
 
@@ -213,20 +213,20 @@ export default {
         //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
-          case 'safety':
-            state.UserReport.safety.FindHelp.push(data.data);
+          case 'Safety':
+            state.UserReport.Safety.FindHelp.push(data.data);
             break;
-          case 'finance':
-            state.UserReport.finance.FindHelp.push(data.data);
+          case 'Finance':
+            state.UserReport.Finance.FindHelp.push(data.data);
             break;
-          case 'housing':
-            state.UserReport.housing.FindHelp.push(data.data);
+          case 'Housing':
+            state.UserReport.Housing.FindHelp.push(data.data);
             break;
-          case 'family':
-            state.UserReport.family.FindHelp.push(data.data);
+          case 'Family':
+            state.UserReport.Family.FindHelp.push(data.data);
             break;
-          case 'victim':
-            state.UserReport.victim.FindHelp.push(data.data);
+          case 'VictimRights':
+            state.UserReport.VictimRights.FindHelp.push(data.data);
             break;
         }
       },
@@ -244,20 +244,20 @@ export default {
         //   .catch(err => Promise.reject(err.message));
 
         switch(data.category){
-          case 'safety':
-            state.UserReport.safety.NextSteps.push(data.data);
+          case 'Safety':
+            state.UserReport.Safety.NextSteps.push(data.data);
             break;
-          case 'finance':
-            state.UserReport.finance.NextSteps.push(data.data);
+          case 'Finance':
+            state.UserReport.Finance.NextSteps.push(data.data);
             break;
-          case 'housing':
-            state.UserReport.housing.NextSteps.push(data.data);
+          case 'Housing':
+            state.UserReport.Housing.NextSteps.push(data.data);
             break;
-          case 'family':
-            state.UserReport.family.NextSteps.push(data.data);
+          case 'Family':
+            state.UserReport.Family.NextSteps.push(data.data);
             break;
-          case 'victim':
-            state.UserReport.victim.NextSteps.push(data.data);
+          case 'VictimRights':
+            state.UserReport.VictimRights.NextSteps.push(data.data);
             break;
         }
       }

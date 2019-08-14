@@ -28,11 +28,11 @@ app.get('/api/UserReports', (req, res) => {
 // create a new note
 app.post('/api/UserReport/create', (req, res) => {
   const UserReport = new database.UserReport({
-    safety: req.body.safety,
-    finance: req.body.finance,
-    housing: req.body.housing,
-    family: req.body.family,
-    victim: req.body.victim
+    Safety: req.body.Safety,
+    Finance: req.body.Finance,
+    Housing: req.body.Housing,
+    Family: req.body.Family,
+    VictimRights: req.body.VictimRights
   });
   UserReport.save((err) => {
     if (err) return res.status(404).send({
@@ -50,47 +50,47 @@ app.post('/api/UserReport/update/:id', (req, res) => {
   }
   var newData;
   switch (req.body.category) {
-    case 'safety':
+    case 'Safety':
       newData = {
         $push: {
-          safety: {
+          Safety: {
             [req.body.group]: req.body.data
           }
         }
       }
       break;
-    case 'finance':
+    case 'Finance':
       newData = {
         $push: {
-          finance: {
+          Finance: {
             [req.body.group]: req.body.data
           }
         }
       }
       break;
-    case 'housing':
+    case 'Housing':
       newData = {
         $push: {
-          housing: {
+          Housing: {
             [req.body.group]: req.body.data
           }
         }
       }
       break;
-    case 'family':
+    case 'Family':
       newData = {
         $push: {
-          family: {
+          Family: {
             [req.body.group]: req.body.data
 
           }
         }
       }
       break;
-    case 'victim':
+    case 'VictimRights':
       newData = {
         $push: {
-          victim: {
+          VictimRights: {
             [req.body.group]: req.body.data
           }
         }

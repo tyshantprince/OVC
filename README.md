@@ -1,0 +1,2 @@
+Expanded sections for categories
+

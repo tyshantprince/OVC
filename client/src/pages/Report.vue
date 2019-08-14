@@ -1,150 +1,103 @@
 /* eslint-disable */
 <template>
   <q-page class="q-pa-xl">
-    <div class="summary">
-      <div class="row justify-center">
-        <div class="col-12 text-center">
-          <q-banner class style="background-color: #21c2b6; color: #fff">
-            <h5 style="color: #fff">
-              It sounds like you might have a problem with
-              <!-- <span
-                class="text-bold text-h4"
-                v-for="category in categories"
-                :key="category"
-              >{{" " + category + ", " }}</span> -->
+    <div class="row justify-center">
+      <div class="col-12 text-center">
+        <q-banner class style="background-color: #21c2b6; color: #fff">
+          <h5 style="color: #fff">
+            It sounds like you might have a problem with
+            <span
+              class="text-bold text-h4"
+            >{{new Intl.ListFormat().format(categories.map((category) => { return category == "VictimRights" ? "Victim Rights" : category })) }}</span>
 
-              <span class="teext-bold text-h4">
-                Safety, Finance, Housing, Family, and Victim Rights
+            <br />Here is some information that might help address your needs.
+          </h5>
+        </q-banner>
+      </div>
 
-              </span>
+      <!-- Expansion Items -->
+      <div class="q-pa-sm" style="width: 80%">
+        <q-list bordered>
+          <q-expansion-item
+            :value="expanded == category"
+            @click="() => { expanded = category}"
+            class="q-pa-sm"
+            v-for="category in categories"
+            :key="category"
+            :group="category"
+            expand-separator
+            header-class="text-teal bg-white text-h4 text-center"
+          >
+            <template v-slot:header>
+         
 
-              <br />Here is some information that might help address your needs.
-            </h5>
-          </q-banner>
-        </div>
+              <q-item-section>{{ category }}</q-item-section>
+            </template>
+            <q-card flat>
+              <q-card-section>
+                <p class="text-center">{{ UserReport[category].about}}</p>
+              </q-card-section>
 
-        <!-- Side Buttons -->
-
-        <div class="row">
-          <div class="col-2">
-            <div class="column items-center">
-              <div class="q-pa-xl" v-for="(category) in categories" :key="category">
-                <q-btn
-                  :unelevated="true"
-                  color="white"
-                  text-color="purple"
-                  round
-                  :icon="icons[category]"
-                  dense
-                  size="3rem"
-                  @click="handleIconClick(category)"
-                ></q-btn>
-              </div>
-            </div>
-          </div>
-
-          <!--  Report Content -->
-
-          <div class="col-10" style>
-            <div class="row">
-              <div class="col-10 q-pa-md">
-                <q-card
-                  v-for="(category, id) in categories"
-                  :name="id"
-                  :key="id"
-                  :id="id"
-                  class="row no-wrap flex-center q-pa-md q-ma-md"
-                  style
-                >
-                  <!-- About your situation -->
-                  <div class="col-10 q-pa-md" v-if=" topic == 'About'">
-                    <div
-                      class="text-body q-pa-lg"
-                      style
-                      v-for="(text, id) in current_about"
-                      :key="id"
-                    >{{ text }}</div>
-                  </div>
-
-                  <div class="col-10" v-if=" topic == 'NextSteps'">
-                    <div
-                      class="text-body q-pa-lg"
-                      style
-                      v-for="(nextStep, id) in UserReport[slide].NextSteps"
-                      :key="id"
-                    >{{ nextStep }}</div>
-                  </div>
-
-                  <div class="col-10" v-if=" topic == 'FindHelp'">
-                    <div
-                      class="text-body q-pa-lg"
-                      style
-                      v-for="(findHelp, id) in UserReport[slide].FindHelp"
-                      :key="id"
-                    >{{ findHelp }}</div>
-                  </div>
-
-                  <div class="col-10" v-if=" topic == 'MoreInfo'">
-                    <div
-                      class="text-body q-pa-lg"
-                      style
-                      v-for="(moreInfo, id) in UserReport[slide].MoreInfo"
-                      :key="id"
-                    >{{ moreInfo }}</div>
-                  </div>
-
-                    <div class="col-3 q-pa-md">
-                      <div class="column items-center justify-center ">
-                        <div class="col-3 q-pa-sm">
+              <q-card-section>
+                <div class="row">
+                  <div class="col q-pa-md">
+                    <h5>Next Steps</h5>
+                    <ul>
+                      <li v-for="(data, id) in UserReport[category].NextSteps" :key="id">
+                        <span v-if="data.includes('https')">
                           <q-btn
-                            style="height: 90px;"
-                            label="About our Situation"
-                            :unelevated="true"
-                            color="purple"
-                            text-color="white"
-                            @click="topic = 'About'"
-                          ></q-btn>
-                        </div>
+                          @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
+                            type="a"
+                            color="teal"
+                            no-caps
+                          >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
+                        </span>
 
-                        <div class="col-3 q-pa-sm">
-                          <q-btn
-                            style="height: 90px; width: 200px"
-                            :unelevated="true"
-                            label="Next Steps"
-                            color="purple"
-                            text-color="white"
-                            @click="topic = 'NextSteps'"
-                          ></q-btn>
-                        </div>
-
-                        <div class="col-3 q-pa-sm">
-                          <q-btn
-                            style="height: 90px; width: 200px"
-                            :unelevated="true"
-                            label="Where to find Help"
-                            color="purple"
-                            text-color="white"
-                            @click="topic = 'FindHelp'"
-                          ></q-btn>
-                        </div>
-
-                        <div class="col-3 q-pa-sm">
-                          <q-btn
-                            style="height: 90px; width: 200px"
-                            :unelevated="true"
-                            label="Get More Information"
-                            color="purple"
-                            text-color="white"
-                            @click="topic = 'MoreInfo'"
-                          ></q-btn>
-                        </div>
-                    </div>
+                        <span v-else>{{ data }}</span>
+                      </li>
+                    </ul>
                   </div>
-                </q-card>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <div class="col q-pa-md">
+                    <h5>Find Help</h5>
+                    <ul>
+                      <li v-for="(data, id) in UserReport[category].FindHelp" :key="id">
+                        <span v-if="data.includes('https')">
+                          <q-btn
+                           @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
+                            type="a"
+                            color="teal"
+                            no-caps
+                          >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
+                        </span>
+
+                        <span v-else>{{ data }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col q-pa-md">
+                    <h5>More Info</h5>
+                    <ul>
+                      <li v-for="(data, id) in UserReport[category].MoreInfo" :key="id">
+                        <span v-if="data.includes('https')">
+                          <q-btn
+                           @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
+                            type="a"
+                            color="teal"
+                            no-caps
+                          >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
+                        </span>
+
+                        <span v-else>{{ data }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-separator />
+        </q-list>
       </div>
     </div>
   </q-page>
@@ -160,23 +113,24 @@ export default {
   name: "PageReport",
   data() {
     return {
-      slide: "safety",
+      expanded: "Safety",
       spot: 0,
       topic: "About",
       icons: {
-        safety: "local_hospital",
-        finance: "monetization_on",
-        housing: "domain",
-        family: "child_friendly",
-        victim: "security"
+        Safety: "local_hospital",
+        Finance: "monetization_on",
+        Housing: "domain",
+        Family: "child_friendly",
+        VictimRights: "security"
       }
     };
   },
   methods: {
-    changePanel(name) {
-      this.$refs.report.goTo(name);
+    openUrl(url){
+      window.open(url, "_blank");
+
     },
-    handleIconClick(name){
+    handleIconClick(name) {
       // var container = this.$el.querySelector("#" + name);
       // console.log(container);
       // container.scrollTop = container.scrollHeight;
