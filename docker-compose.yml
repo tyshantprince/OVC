@@ -5,6 +5,8 @@ services:
     restart: always
     build: ./server
     command: node index.js
+    env_file:
+      - ./.env
     ports:
       - '3000:3000'
     links:
@@ -13,6 +15,8 @@ services:
     container_name: vue-frontend
     restart: always
     build: ./client
+    env_file:
+      - ./.env
     volumes:
       - ./client:/usr/src/app
     command: npm run serve

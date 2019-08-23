@@ -26,7 +26,7 @@ import Vuex from "vuex"; // state management
 import XLSX from "xlsx"; // reads excel sheets
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL;
 Vue.use(Vuex);
 
 export default {

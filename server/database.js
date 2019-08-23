@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const db_connection = 'mongodb://mongo/ovc'
+const db_connection = process.env.DB_CONNECTION;
 
 var reportSchema = mongoose.Schema({
     safety: [
