@@ -1,118 +1,95 @@
 /* eslint-disable */
 <template>
   <q-page class="q-pa-lg">
-    <div class="row justify-center ">
+    <!-- Top Row  -->
+    <div class="row justify-center">
       <div class="col-12 text-center">
+        <!-- Top Banner  -->
         <q-banner class style="background-color: #21c2b6; color: #fff">
-          <h5 style="color: #fff">
+          <h4 style="color: #fff">
             It sounds like you might have a problem with
+            <!-- Format User Categories Logically -->
             <span
-              class="text-bold text-h4"
+              class="text-bold text-purple-5"
+              style="font-size: 3rem;"
             >{{new Intl.ListFormat().format(categories.map((category) => { return category == "VictimRights" ? "Victim Rights" : category })) }}</span>
 
             <br />
-            <h5 class="q-pa-sm"> Here is some information that might help address your needs.</h5>
-          </h5>
+            <h5
+              class="q-pa-sm"
+              style="font-size: 2rem;"
+            >Here is some information that might help address your needs.</h5>
+          </h4>
         </q-banner>
       </div>
     </div>
 
-      <div class="row">
-        <div class="col-2">
-          <div class="column">
-            <div class="col text-center q-pa-lg" v-for="category in categories" :key="category">
-              <q-btn color="teal" align="center" glossy    @click="() => { expanded = category}">
-                <q-icon size="5em" :name="icons[category]" />
-              </q-btn>
-            </div>
+    <div class="row">
+      <div class="col-2">
+        <div class="column">
+          <div class="col text-center q-pa-lg" v-for="category in categories" :key="category">
+            <q-btn color="purple-5" align="center" glossy @click="() => { expanded = category}">
+              <q-icon size="5em" :name="icons[category]" />
+            </q-btn>
           </div>
         </div>
+      </div>
 
-        <div class="col-10" style="min-width: 80%">
-          <!-- Expansion Items -->
-          <div class="q-pa-sm" style="min-width: 100%">
-            <q-list bordered>
-              <q-expansion-item
+      <div class="col-10" style="min-width: 80%">
+        <!-- Expansion Items -->
+        <div class="q-pa-sm" style="min-width: 100%">
+          <q-list bordered>
+            <q-expansion-item
               style="width: 100%"
-                :value="expanded == category"
-                @click="() => { expanded = category}"
-                class="q-pa-sm"
-                v-for="category in categories"
-                :key="category"
-                :group="category"
-                expand-separator
-                header-class="text-teal bg-white text-h4 text-center"
-              >
-                <template v-slot:header>
-                  <q-item-section>{{ category }}</q-item-section>
-                </template>
-                <q-card flat>
-                  <q-card-section>
-                    <p class="text-center" style="" >{{ UserReport[category].about}}</p>
-                  </q-card-section>
-
-                  <q-card-section>
-                    <div class="row">
-                      <div class="col q-pa-md">
-                        <h5>Next Steps</h5>
-                        <ul>
-                          <li v-for="(data, id) in UserReport[category].NextSteps" :key="id">
-                            <span v-if="data.includes('https')">
-                              <q-btn
-                                @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
-                                type="a"
-                                color="teal"
-                                no-caps
-                              >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
-                            </span>
-
-                            <span v-else>{{ data }}</span>
-                          </li>
-                        </ul>
+              :value="expanded == category"
+              @click="() => { expanded = category}"
+              class="q-pa-sm"
+              v-for="category in categories"
+              :key="category"
+              :group="category"
+              expand-separator
+              header-class="text-purple-5 bg-white text-h4 text-center"
+            >
+              <template v-slot:header>
+                <q-item-section style="font-size: 3rem">{{ category }}</q-item-section>
+              </template>
+              <q-card flat>
+                <div class="row">
+                  <div class="col-10">
+                    <q-card-section>
+                      <div
+                        class="text-h6 text-center q-pa-lg"
+                        style="font-size: 2rem; line-height: 1.5; "
+                      >{{ UserReport[category].about}}</div>
+                    </q-card-section>
+                  </div>
+                  <div class="col-2">
+                    <div class="column items-center justify-between q-px-md" style="height: 100%; width: 100%;">
+                      <div class="col q-my-xs" style="width: 100%;">
+                        <q-btn style="height: 100%; width: 100%; font-size: 1.25rem" color="light-blue-2" text-color="black" label="About Your Situation" @click="makeActive($event, 'about')" />
                       </div>
-                      <div class="col q-pa-md">
-                        <h5>Find Help</h5>
-                        <ul>
-                          <li v-for="(data, id) in UserReport[category].FindHelp" :key="id">
-                            <span v-if="data.includes('https')">
-                              <q-btn
-                                @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
-                                type="a"
-                                color="teal"
-                                no-caps
-                              >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
-                            </span>
 
-                            <span v-else>{{ data }}</span>
-                          </li>
-                        </ul>
+                      <div class="col q-my-xs" style="width: 100%;">
+                        <q-btn style="height: 100%; width: 100%; font-size: 1.25rem" color="light-blue-2" text-color="black" label="Next Steps" @click="makeActive($event, 'nextSteps')" />
                       </div>
-                      <div class="col q-pa-md">
-                        <h5>More Info</h5>
-                        <ul>
-                          <li v-for="(data, id) in UserReport[category].MoreInfo" :key="id">
-                            <span v-if="data.includes('https')">
-                              <q-btn
-                                @click="openUrl(data.substring(data.indexOf('h'), data.lastIndexOf('/')))"
-                                type="a"
-                                color="teal"
-                                no-caps
-                              >Visit {{ data.substring(data.indexOf("/") + 2, data.indexOf("."))}}</q-btn>
-                            </span>
 
-                            <span v-else>{{ data }}</span>
-                          </li>
-                        </ul>
+                      <div class="col q-my-xs" style="width: 100%;">
+                        <q-btn style="height: 100%; width: 100%; font-size: 1.25rem" color="light-blue-2"  text-color="black" label="Where to find Help" @click="makeActive($event, 'findHelp')" />
+                      </div>
+
+                      <div class="col q-my-xs" style="width: 100%;">
+                        <q-btn  style="height: 100%; width: 100%; font-size: 1.25rem" color="light-blue-2" text-color="black" label="Get More Information" @click="makeActive($event, 'noreInfo')" />
                       </div>
                     </div>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
+                  </div>
+                </div>
+              </q-card>
+            </q-expansion-item>
 
-              <q-separator />
-            </q-list>
-          </div>
+            <q-separator />
+          </q-list>
         </div>
+      </div>
     </div>
   </q-page>
 </template>
@@ -143,11 +120,11 @@ export default {
     openUrl(url) {
       window.open(url, "_blank");
     },
-    handleIconClick(name) {
-      // var container = this.$el.querySelector("#" + name);
-      // console.log(container);
-      // container.scrollTop = container.scrollHeight;
-      console.log(name);
+    makeActive(event, topic){
+      event.target.style.marginLeft = "100px";
+
+      console.log(event);
+
     }
   },
   computed: {
