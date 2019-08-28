@@ -33,6 +33,7 @@ import {
   QSeparator,
   QExpansionItem,
   QSplitter
+  
 
 } from 'quasar'
 
@@ -67,7 +68,9 @@ Vue.use(Quasar, {
     QCardActions,
     QExpansionItem,
     QSeparator,
-    QSplitter
+    QSplitter,
+    QCardActions
+
 
 
   },
