@@ -5,13 +5,13 @@
     <div class="row justify-center">
       <div class="col-12 text-center">
         <!-- Top Banner  -->
-        <q-banner class style="background-color: #21c2b6; color: #fff">
+        <q-banner class style="background-color: #2b7b72; color: #fff">
           <h4 style="color: #fff">
             It sounds like you might have a problem with
             <!-- Format User Categories Logically -->
             <span
-              class="text-bold text-purple-5"
-              style="font-size: 3rem;"
+              class="text-bold "
+              style="font-size: 3rem; line-height: 1.5"
             >{{new Intl.ListFormat().format(categories.map((category) => { return category == "VictimRights" ? "Victim Rights" : category })) }}</span>
 
             <br />
@@ -30,7 +30,7 @@
           <div class="col text-center q-pa-xl" v-for="category in categories" :key="category">
             <q-btn
               class
-              color="purple-5"
+              color="purple-9"
               align="center"
               round
               glossy
@@ -51,18 +51,18 @@
               :value="expanded == category"
               @click="() => { expanded = category}"
               class="q-pa-sm"
-              v-for="category in categories"
+              v-for="category in categories.map((category) => {return category == 'VictimRights' ? 'Victim Rights' : category })"
               :key="category"
               :group="category"
               expand-separator
-              header-class="text-purple-5 bg-white text-h4 text-center"
+              header-class="text-purple-9 bg-white text-h4 text-center"
             >
               <template v-slot:header>
                 <q-item-section style="font-size: 3rem">{{ category }}</q-item-section>
               </template>
               <q-card flat >
                 <div class="row">
-                  <div class="col-10 content-area q-ma-xl bg-light-blue-2"  >
+                  <div class="col-10 content-area q-ma-xl" color="accent">
                     <!-- About your situation -->
                     <q-card-section v-if="topic == 'about'">
                       <div
@@ -97,13 +97,13 @@
                             <q-stepper-navigation>
                               <q-btn
                                 @click="$refs.stepper[0].next()"
-                                color="purple-5"
+                                color="purple-9"
                                 :label="step === 3 ? 'Finish' : 'Continue'"
                               />
                               <q-btn
                                 v-if="step > 1"
                                 flat
-                                color="purple-5"
+                                color="purple-9"
                                 @click="$refs.stepper[0].previous()"
                                 label="Back"
                                 class="q-ml-sm"
@@ -126,7 +126,7 @@
 
                         <div class="row">
                           <div class="col q-pa-md">
-                            <q-card class="my-card bg-purple-5 text-white">
+                            <q-card class="my-card bg-purple-9 text-white">
                               <q-card-section>
                                 <div class="text-h6">Call</div>
                                 <div class="text-subtitle1">{ Insert Contact }</div>
@@ -143,7 +143,7 @@
                             </q-card>
                           </div>
                           <div class="col q-pa-md">
-                            <q-card class="my-card bg-purple-5 text-white">
+                            <q-card class="my-card bg-purple-9 text-white">
                               <q-card-section>
                                 <div class="text-h6">Call</div>
                                 <div class="text-subtitle1">{ Insert Contact }</div>
@@ -160,7 +160,7 @@
                             </q-card>
                           </div>
                           <div class="col q-pa-md">
-                            <q-card class="my-card bg-purple-5 text-white">
+                            <q-card class="my-card bg-purple-9 text-white">
                               <q-card-section>
                                 <div class="text-h6">Call</div>
                                 <div class="text-subtitle1">{ Insert Contact }</div>
@@ -194,7 +194,7 @@
 
                         <div class="text-center">
                           <q-btn
-                            color="purple-5"
+                            color="purple-9"
                             rounded
                             size="1.5rem"
                             icon="subdirectory_arrow_right"
@@ -212,8 +212,8 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs content-btn" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1.5rem"
-                            color="light-blue-2"
+                            style="height: 100%; width: 100%; font-size: 1.5rem;"
+                            color="accent"
                             text-color="black"
                             label="About Your Situation"
                             @click="makeActive($event, 'about')"
@@ -224,9 +224,9 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1.5rem"
-                            color="light-blue-2"
+                            style="height: 100%; width: 100%; font-size: 1.5rem;"
                             text-color="black"
+                            color="accent"
                             label="Next Steps"
                             @click="makeActive($event, 'nextSteps')"
                           />
@@ -236,8 +236,8 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1.5rem"
-                            color="light-blue-2"
+                            style="height: 100%; width: 100%; font-size: 1.5rem;"
+                            color="accent"
                             text-color="black"
                             label="Where to find Help"
                             @click="makeActive($event, 'findHelp')"
@@ -248,9 +248,9 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1.5rem"
-                            color="light-blue-2"
+                            style="height: 100%; width: 100%; font-size: 1.5rem;"
                             text-color="black"
+                            color="accent"
                             label="Get More Information"
                             @click="makeActive($event, 'moreInfo')"
                           />
