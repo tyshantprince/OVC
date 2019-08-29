@@ -26,7 +26,7 @@ import Vuex from "vuex"; // state management
 import XLSX from "xlsx"; // reads excel sheets
 import axios from "axios";
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.VUE_APP_BASE_URL;
 Vue.use(Vuex);
 
 export default {
@@ -74,6 +74,7 @@ export default {
     actions: {
       // actions are used to commit mutations
       fetchSpreadsheet({ commit }) {
+        console.log(process.env)
         var url = 
           "https://docs.google.com/spreadsheets/d/e/2PACX-1vSQz9V3t_yg_yCYRKQlWfgEF5FNTugCmzGKNR2oWARQlCX63I9aodluv0Txr7Kcyw/pub?output=xlsx";
         axios(url, { responseType: "arraybuffer" })
@@ -97,7 +98,6 @@ export default {
             /* error in parsing */
           });
       },
-
       newReport({ commit }) {
         axios
           .post(`${BASE_URL}/api/UserReport/create`, {
@@ -106,11 +106,6 @@ export default {
               FindHelp: [],
               MoreInfo: []
             },
-            intro: {
-        NextSteps: [],
-        FindHelp: [],
-        MoreInfo: []
-      },
             Finance: {
               NextSteps: [],
               FindHelp: [],
@@ -169,16 +164,16 @@ export default {
         state.currentQuestionId = QuestionID;
       },
       appendMoreInfo(state, data) {
-        // axios
-        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-        //     category: data.category,
-        //     group: "MoreInfo",
-        //     data: data.data
-        //   })
-        //   .then(response => {
-        //     return response.data;
-        //   })
-        //   .catch(err => Promise.reject(err.message));
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "MoreInfo",
+            data: data.data
+          })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'Safety':
@@ -201,16 +196,16 @@ export default {
       },
 
       appendFindHelp(state, data) {
-        // axios
-        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-        //     category: data.category,
-        //     group: "FindHelp",
-        //     FindHelp: data.data,
-        //   })
-        //   .then(response => {
-        //     return response.data;
-        //   })
-        //   .catch(err => Promise.reject(err.message));
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "FindHelp",
+            data: data.data,
+          })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'Safety':
@@ -232,16 +227,16 @@ export default {
       },
 
       appendNextSteps(state, data) {
-        // axios
-        //   .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
-        //     category: data.category,
-        //     group: "NextSteps",
-        //     NextSteps: data.data,
-        //   })
-        //   .then(response => {
-        //     return response.data;
-        //   })
-        //   .catch(err => Promise.reject(err.message));
+        axios
+          .post(`${BASE_URL}/api/UserReport/update/${state.doc}`, {
+            category: data.category,
+            group: "NextSteps",
+            data: data.data,
+          })
+          .then(response => {
+            return response.data;
+          })
+          .catch(err => Promise.reject(err.message));
 
         switch(data.category){
           case 'Safety':

@@ -2,19 +2,12 @@ const mongoose = require('mongoose')
 const db_connection = process.env.DB_CONNECTION;
 
 var reportSchema = mongoose.Schema({
-    safety: [
-      ],
-      intro: [
-      ],
-      finance: [
- 
-      ],
-      housing: [
-      ],
-      family: [
-      ],
-      victim: [
-      ]
+    safety: {},
+      intro: {},
+      finance: {},
+      housing: {},
+      family: {},
+      victim: {}
 })
 
 UserReport = exports.UserReport = mongoose.model('UserReport', reportSchema)
