@@ -132,7 +132,7 @@
                                 <div class="text-subtitle1">{ Insert Contact }</div>
                               </q-card-section>
 
-                              <q-card-section>{{ lorem }}</q-card-section>
+                              <q-card-section></q-card-section>
 
                               <q-separator dark />
 
@@ -149,7 +149,7 @@
                                 <div class="text-subtitle1">{ Insert Contact }</div>
                               </q-card-section>
 
-                              <q-card-section>{{ lorem }}</q-card-section>
+                              <q-card-section></q-card-section>
 
                               <q-separator dark />
 
@@ -166,7 +166,7 @@
                                 <div class="text-subtitle1">{ Insert Contact }</div>
                               </q-card-section>
 
-                              <q-card-section>{{ lorem }}</q-card-section>
+                              <q-card-section></q-card-section>
 
                               <q-separator dark />
 
@@ -212,7 +212,7 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs content-btn" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1rem"
+                            style="height: 100%; width: 100%; font-size: 1.5rem"
                             color="light-blue-2"
                             text-color="black"
                             label="About Your Situation"
@@ -224,7 +224,7 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1rem"
+                            style="height: 100%; width: 100%; font-size: 1.5rem"
                             color="light-blue-2"
                             text-color="black"
                             label="Next Steps"
@@ -236,7 +236,7 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1rem"
+                            style="height: 100%; width: 100%; font-size: 1.5rem"
                             color="light-blue-2"
                             text-color="black"
                             label="Where to find Help"
@@ -248,7 +248,7 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
-                            style="height: 100%; width: 100%; font-size: 1rem"
+                            style="height: 100%; width: 100%; font-size: 1.5rem"
                             color="light-blue-2"
                             text-color="black"
                             label="Get More Information"
@@ -266,7 +266,6 @@
           </q-list>
         </div>
       </div>
-    </div>
   </q-page>
 </template>
 
@@ -293,7 +292,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$refs);
   },
   methods: {
     openUrl(url) {

@@ -2,6 +2,7 @@ const express = require('express')
 const database = require('./database')
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const xlsx = require('xlsx');
 
 const app = express();
 
@@ -27,12 +28,13 @@ app.get('/api/UserReports', (req, res) => {
 });
 // create a new note
 app.post('/api/UserReport/create', (req, res) => {
+  // return res.send(req.body.UserReport)
   const UserReport = new database.UserReport({
     Safety: req.body.Safety,
     Finance: req.body.Finance,
     Housing: req.body.Housing,
     Family: req.body.Family,
-    VictimRights: req.body.VictimRights
+    VictimRights: req.body.Victim
   });
   UserReport.save((err) => {
     if (err) return res.status(404).send({
@@ -53,8 +55,8 @@ app.post('/api/UserReport/update/:id', (req, res) => {
     case 'Safety':
       newData = {
         $push: {
-          Safety: {
-            [req.body.group]: req.body.data
+          safety: {
+              [req.body.group]: req.body.data
           }
         }
       }
@@ -62,8 +64,8 @@ app.post('/api/UserReport/update/:id', (req, res) => {
     case 'Finance':
       newData = {
         $push: {
-          Finance: {
-            [req.body.group]: req.body.data
+          finance: {
+              [req.body.group]: req.body.data
           }
         }
       }
@@ -71,8 +73,8 @@ app.post('/api/UserReport/update/:id', (req, res) => {
     case 'Housing':
       newData = {
         $push: {
-          Housing: {
-            [req.body.group]: req.body.data
+          housing: {
+              [req.body.group]: req.body.data
           }
         }
       }
@@ -80,9 +82,8 @@ app.post('/api/UserReport/update/:id', (req, res) => {
     case 'Family':
       newData = {
         $push: {
-          Family: {
-            [req.body.group]: req.body.data
-
+          family: {
+              [req.body.group]: req.body.data
           }
         }
       }
@@ -90,20 +91,20 @@ app.post('/api/UserReport/update/:id', (req, res) => {
     case 'VictimRights':
       newData = {
         $push: {
-          VictimRights: {
-            [req.body.group]: req.body.data
+          victim: {
+              [req.body.group]: req.body.data
           }
         }
       }
       break;
-      default:
-          newData = {
-            $push: {
-              intro: {
-                [req.body.group]: req.body.data
-              }
-            }
+    default:
+      newData = {
+        $push: {
+          intro: {
+              [req.body.group]: req.body.data
           }
+        }
+      }
   }
 
   console.log(newData);
@@ -120,14 +121,29 @@ app.post('/api/UserReport/update/:id', (req, res) => {
 
 
 })
-// delete an existing note with the given object id
-//   app.post('/api/UserReport/delete/:id', (req,res) => {
-//     Note.findByIdAndRemove(req.params.id, (err) => {
-//       if (err) return res.status(404).send({message: err.message});
-//       return res.send({ message: 'note deleted!' });
-//     });
-//   });
 
+// delete an existing note with the given object id
+  app.post('/api/UserReport/delete/:id', (req,res) => {
+    Note.findByIdAndRemove(req.params.id, (err) => {
+      if (err) return res.status(404).send({message: err.message});
+      return res.send({ message: 'note deleted!' });
+    });
+  });
+
+// create excel sheet from JSON objects in Database
+
+app.get('/api/spreadsheet', (req, res) => {
+  database.UserReport.find({}).sort({
+    updatedAt: 'descending'
+  }).exec((err, UserReports) => {
+    if (err) return res.status(404).send('Error while getting UserReports!');
+    console.log(UserReports[0]);
+    // var newSheet = xlsx.utils.aoa_to_sheet(UserReports);
+    // xlsx.writeFile(newSheet, 'out.xlsx')
+    return res.send('newSheet');
+  });
+
+})
 
 app.get('/test', function (req, res) {
   database.UserReport.find(function (err, UserReports) {

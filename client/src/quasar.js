@@ -69,9 +69,6 @@ Vue.use(Quasar, {
     QExpansionItem,
     QSeparator,
     QSplitter,
-    QCardActions
-
-
 
   },
   directives: {

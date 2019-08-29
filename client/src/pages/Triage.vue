@@ -263,6 +263,7 @@ export default {
   created() {
     this.$store.dispatch("fetchSpreadsheet");
     this.$store.dispatch("newReport");
+
   },
   methods: {
     showNotif(message) {

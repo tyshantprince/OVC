@@ -5,6 +5,8 @@ services:
     restart: always
     build: ./server
     command: node index.js
+    env_file:
+      - .env
     ports:
       - '3000:3000'
     links:
@@ -16,6 +18,8 @@ services:
     volumes:
       - ./client:/usr/src/app
     command: npm run serve
+    env_file:
+      - .env
     ports:
       - '8080:8080'
   mongo:
