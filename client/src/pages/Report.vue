@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-1">
         <div class="column">
           <div class="col text-center q-pa-xl" v-for="category in categories" :key="category">
@@ -40,14 +40,14 @@
             </q-btn>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="col-11" style="min-width: 80%">
         <!-- Expansion Items -->
         <div class="q-pa-sm" style="min-width: 100%">
-          <q-list bordered>
+          <q-list  style="">
             <q-expansion-item
-              style="width: 100%"
+              style="width: 100%; "
               :value="expanded == category"
               @click="() => { expanded = category}"
               class="q-pa-sm"
@@ -60,20 +60,21 @@
               <template v-slot:header>
                 <q-item-section style="font-size: 3rem">{{ category }}</q-item-section>
               </template>
-              <q-card flat>
+              <q-card flat >
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-10 content-area q-ma-xl bg-light-blue-2"  >
                     <!-- About your situation -->
                     <q-card-section v-if="topic == 'about'">
                       <div
-                        class="text-h6 text-center q-pa-lg"
+                        class="text-center q-pa-lg "
                         style="font-size: 2rem; line-height: 1.5; "
-                      >{{ UserReport[category].about}}</div>
-                    </q-card-section>
+                      >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore accusamus soluta enim minima illum autem eveniet neque impedit iste. Deserunt repellat sunt odit nihil possimus eaque eum et neque! Quo.
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore accusamus soluta enim minima illum autem eveniet neque impedit iste. Deserunt repellat sunt odit nihil possimus eaque eum et neque! Quo.
+                    </div></q-card-section>
 
                     <q-card-section v-if="topic == 'nextSteps'">
                       <div class="text-center q-pa-md" style="font-size: 2rem; line-height: 1.5; ">
-                        <q-stepper v-model="step" ref="stepper" animated active-color="purple">
+                        <q-stepper  v-model="step" ref="stepper" animated active-color="purple">
                           <q-step :name="1" prefix="1" title="Contact {Name of Resource}">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos, optio?
                             Quibusdam accusantium odio animi similique libero fugiat dolor, alias blanditiis natus \
@@ -118,7 +119,7 @@
                         class="text-center q-pa-lg"
                         style="font-size: 1.5rem; line-height: 1.5; "
                       >
-                        <p>
+                        <p class="">
                           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque perspiciatis repellat ut magnam voluptates doloribus, quae eum reru
                           m distinctio fugiat eveniet non consequatur ipsam labore facere dolores dicta! Laudantium, iusto.
                         </p>
@@ -181,7 +182,7 @@
 
                     <q-card-section v-if="topic == 'moreInfo'">
                       <div
-                        class="text-h6 text-center q-pa-lg"
+                        class="text-h6 text-center q-pa-lg "
                         style="font-size: 1.6rem; line-height: 1.5; "
                       >
                         <p>
@@ -195,7 +196,7 @@
                           <q-btn
                             color="purple-5"
                             rounded
-                            size="2rem"
+                            size="1.5rem"
                             icon="subdirectory_arrow_right"
                             label="More Info"
                           />
@@ -209,7 +210,7 @@
                       style="height: 100%; width: 100%;"
                     >
                       <transition name="btn-slide">
-                        <div class="col q-my-xs" style="width: 100%;">
+                        <div class="col q-my-xs content-btn" style="width: 100%;">
                           <q-btn
                             style="height: 100%; width: 100%; font-size: 1rem"
                             color="light-blue-2"
@@ -281,7 +282,7 @@ export default {
     return {
       expanded: "Safety",
       step: 1,
-      topic: "nextSteps",
+      topic: "about",
       icons: {
         Safety: "local_hospital",
         Finance: "monetization_on",
@@ -330,11 +331,15 @@ export default {
 </script>
 
 <style scoped>
-.btn-slide-enter {
-  translate: 100px;
+.content-area{
+  border: 1px transparent solid; 
+  border-radius: 25px;
+  width: 73%;
+  height: 28rem;
 }
 
-.btn-slide-exit {
-  translate: -100px;
+.content-btn{
+    border: 1px transparent solid; 
+  border-radius: 25px;
 }
 </style>
