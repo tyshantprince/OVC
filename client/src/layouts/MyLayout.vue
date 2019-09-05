@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf" style="background-color: #21c2b6">
-    <q-header style="background-color: #21c2b6; color: #fff">
+  <q-layout view="lHh Lpr lFf" style="background-color: #2b7b72" class="foundationFont">
+    <q-header style="background-color: #2b7b72; color: #fff">
       <q-toolbar>
         <q-btn
           flat
@@ -78,4 +78,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.foundationFont{
+  font-family: foundationFont;
+}
+</style>

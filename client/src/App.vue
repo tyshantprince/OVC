@@ -74,7 +74,6 @@ export default {
     actions: {
       // actions are used to commit mutations
       fetchSpreadsheet({ commit }) {
-        console.log(process.env)
         var url = 
           "https://docs.google.com/spreadsheets/d/e/2PACX-1vSQz9V3t_yg_yCYRKQlWfgEF5FNTugCmzGKNR2oWARQlCX63I9aodluv0Txr7Kcyw/pub?output=xlsx";
         axios(url, { responseType: "arraybuffer" })
