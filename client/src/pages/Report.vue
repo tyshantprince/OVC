@@ -206,7 +206,7 @@
                   </div>
                   <div class="col-2">
                     <div
-                      class="column items-center justify-between q-px-md"
+                      class="column items-center justify-center q-px-md q-py-md"
                       style="height: 100%; width: 100%;"
                     >
                       <transition name="btn-slide">

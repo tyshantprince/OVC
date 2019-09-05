@@ -14,8 +14,6 @@ Dynamically updates user report based on selected answers
 */
 <template>
   <q-page class="q-pa-xl">
-
-
     <!-- Intro Section -->
 
     <div v-if="currentQuestion && currentQuestion.category == 'intro'">
@@ -34,7 +32,6 @@ Dynamically updates user report based on selected answers
           >{{ currentQuestion.question }}</h2>
         </div>
         <div class="col-xs-12 col-md-6">
-
           <!-- If the answer is a yes or no show this -->
 
           <div class v-if="currentAnswers.length < 3">
@@ -42,47 +39,52 @@ Dynamically updates user report based on selected answers
               :key="answer.id"
               v-for="(answer, index) in currentAnswers"
               @click="handleClick($event, answer)"
-              class="shadow-0 q-ma-lg"
-              style="color: #fff; border-style: solid; border-color: #AADACE; border-width: 20px;border-radius: 120px; height: 100%; width: 100%;"
+              class="shadow-0 q-ma-lg text-capitalize myIntro"
+              style
               href="#"
               rounded
               align="left"
             >
-              <div class="row q-pa-md justify-center">
+              <div class="row q-pa-md justify-center items-center">
                 <div style>
                   <q-icon
                     v-if="index == 0"
                     name="face"
                     left
-                    size="7rem"
-                    style="color: #AF6CA0; background-color: #fff; border-radius: 50px;"
+                    size="5rem"
+                    color="secondary"
+                    style="background-color: #fff; border-radius: 50px;"
                   />
                   <q-icon
                     v-if="index == 1"
                     name="clear"
                     left
-                    size="7rem"
-                    style="color: #AF6CA0; background-color: #fff; border-radius: 50px;"
+                    color="secondary"
+                    size="5rem"
+                    style="background-color: #fff; border-radius: 50px;"
                   />
                 </div>
 
                 <div class>
-                  <h5>{{ answer.answer }}</h5>
+                  <h5>{{ answer.answer.toLowerCase() }}</h5>
                 </div>
               </div>
             </q-btn>
           </div>
-          <div class="row justify-first" style v-else>
+          <div class="row justify-center" style v-else>
             <q-select
-              style="width: 65%; height: 7rem;"
+              class="text-center"
+              style="width: 65%; height: 10rem; font-size: 3rem;  "
               rounded
               v-model="model"
               :options="this.counties"
-              label="County"
-              color="primary"
-              bg-color="21c2b6"
+              color="secondary"
+              dark
+              bg-color="primary"
               :options-cover="true"
-              options-selected-class="text-teal"
+              options-selected-class="secondary"
+              :stack-label="false"
+              hint="County"
             >
               <template v-if="model" v-slot:append>
                 <q-icon name="cancel" @click.stop="model = null" class="cursor-pointer" />
@@ -104,7 +106,6 @@ Dynamically updates user report based on selected answers
       </div>
     </div>
 
-
     <!-- End Of Intro Questions -->
 
     <div class v-else-if="currentQuestion && currentQuestion.category != 'intro'">
@@ -114,7 +115,7 @@ Dynamically updates user report based on selected answers
           v-model="category_step"
           header-nav
           ref="stepper"
-          color="teal"
+          color="secondary"
           animated
           class="shadow-10"
         >
@@ -127,45 +128,60 @@ Dynamically updates user report based on selected answers
               :title="category"
               class="q-pa-lg"
             >
-              <div class="row justify-center" style="padding: 0px !important;">
-                <div class="col-12 col-sm-4">
-                  <h3 class="text-center" v-if="currentQuestion">
-                    {{ currentQuestion.question }}
-                    <q-btn
-                      class="col-3"
-                      round
-                      size="sm"
-                      style="color: #21c2b6; background-color:#fff"
-                      v-if="currentQuestion.tip"
-                      @click="showNotif(currentQuestion.tip)"
-                    />
-                  </h3>
-                </div>
-                <div class="col-12">
-                  <div class="row justify-center">
-                    <q-btn
-                      stack
-                      dense
-                      :key="answer.id"
-                      v-for="answer in currentAnswers"
-                      @click="handleClick($event, answer)"
-                      size="lg"
-                      class="shadow-12 q-pa-lg q-ma-lg"
-                      style="background: #21c2b6; color: #fff"
-                      href="#"
-                      :icon="answer.icon"
-                    >{{ answer.answer }}</q-btn>
+              <div class v-if="currentAnswers.length < 3">
+                <div class="row justify-center items-center">
+                  <div class="col">
+                    <div class="col-12 col-sm-4">
+                      <h3 class="text-center" v-if="currentQuestion">
+                        {{ currentQuestion.question }}
+                      </h3>
+                    </div>
+                  </div>
+                  <div class="col q-pa-lg q-mx-md">
+                      <q-btn
+                        stack
+                        dense
+                        :key="answer.id"
+                        v-for="answer in currentAnswers"
+                        @click="handleClick($event, answer)"
+                        size="lg"
+                        class="shadow-12 q-pa-lg q-ma-lg mybtn text-capitalize"
+                        style="color: #fff"
+                        href="#"
+                        no-caps
+                        :icon="answer.icon"
+                      >{{ answer.answer.toLowerCase() }}</q-btn>
                   </div>
                 </div>
               </div>
 
-              <div class="flex flex-center">
-                <q-btn style="color: #fff; background-color:#fff" @click="backQuestion">
-                  <q-icon style="color:#21c2b6" name="arrow_back"></q-icon>
-                </q-btn>
+              <div class v-else>
+                <div class="row items-center">
+                  <div class="col">
+                    <div class="col-12 col-sm-4">
+                      <h3 class="text-center" v-if="currentQuestion">
+                        {{ currentQuestion.question }}
+                      </h3>
+                    </div>
+                  </div>
+                  <div class="col-6 q-pa-lg q-mx-md self-center">
+                      <q-btn
+                        stack
+                        dense
+                        :key="answer.id"
+                        v-for="answer in currentAnswers"
+                        @click="handleClick($event, answer)"
+                        size="lg"
+                        class="shadow-12 q-pa-lg q-ma-lg victimBtn self-center"
+                        style="color: #fff"
+                        href="#"
+                        align="center"
+                        :icon="answer.icon"
+                      >{{ answer.answer }}</q-btn>
+                  </div>
+                </div>
               </div>
-              <q-stepper-navigation>
-              </q-stepper-navigation>
+              <q-stepper-navigation></q-stepper-navigation>
             </q-step>
           </template>
         </q-stepper>
@@ -263,28 +279,13 @@ export default {
   created() {
     this.$store.dispatch("fetchSpreadsheet");
     this.$store.dispatch("newReport");
-
   },
   methods: {
-    showNotif(message) {
-      this.$q.notify({
-        color: "white",
-        textColor: "black",
-        icon: "info",
-        message: "<p><em>" + message + "</em></p>",
-        position: "center",
-        timeout: 3000,
-        closeBtn: "Close",
-        multiline: true,
-        html: true
-      });
-    },
     handleDropdown(e) {
       var that = this;
       var selectedAnswer = this.currentAnswers.filter(function(answer) {
         return answer.answer == that.model;
       })[0];
-
 
       this.handleClick(e, selectedAnswer);
     },
@@ -323,3 +324,52 @@ export default {
   mounted() {}
 };
 </script>
+<style lang="stylus" scoped>
+.myIntro:hover {
+  background-color: #6a1b9a !important;
+}
+
+.myIntro {
+  color: #fff;
+  background-color: #2b7b72;
+  border-style: solid;
+  border-color: #AADACE;
+  border-width: 20px;
+  border-radius: 120px;
+  height: 100%;
+  width: 100%;
+}
+
+
+
+.mybtn:hover {
+  background-color: #6a1b9a !important;
+}
+
+.mybtn {
+  color: #fff;
+  background-color: #2b7b72;
+  border-style: solid;
+  border-color: #AADACE;
+  border-width: 20px;
+  border-radius: 120px;
+  height: 100%;
+  width: 100%;
+}
+
+
+.victimBtn:hover {
+  background-color: #6a1b9a !important;
+}
+
+.victimBtn {
+  color: #fff;
+  background-color: #2b7b72;
+  border-style: solid;
+  border-color: #AADACE;
+  border-width: 20px;
+  border-radius: 120px;
+  width: 40%;
+  height: 100%;
+}
+</style>

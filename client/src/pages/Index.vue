@@ -9,7 +9,7 @@
         @click="start"
         class="shadow-12"
         size="xl"
-        style="background: #fff; color: #21c2b6"
+        style="background: #fff; color: #2b7b72"
         label="Click here to Begin"
         rounded
       />
