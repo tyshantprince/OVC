@@ -47,15 +47,16 @@
         <div class="q-pa-sm" style="min-width: 100%">
           <q-list  style="">
             <q-expansion-item
-              style="width: 100%; "
+              style="width: 100%; ;  "
               :value="expanded == category"
               @click="() => { expanded = category}"
               class="q-pa-sm"
               v-for="category in categories.map((category) => {return category == 'VictimRights' ? 'Victim Rights' : category })"
               :key="category"
               :group="category"
+              :header-style="{ height:'6rem'}"
               expand-separator
-              header-class="text-purple-9 bg-white text-h4 text-center"
+              header-class="text-purple-9 bg-white text-h4 text-center headerBorder"
             >
               <template v-slot:header>
                 <q-item-section style="font-size: 3rem">{{ category }}</q-item-section>
@@ -212,9 +213,9 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs content-btn" style="width: 100%;">
                           <q-btn
+                          v-bind:class="{ activeBtn: topic == 'about' }"
                             style="height: 100%; width: 100%; font-size: 1.5rem;"
-                            color="accent"
-                            text-color="black"
+                            color="primary"
                             label="About Your Situation"
                             @click="makeActive($event, 'about')"
                           />
@@ -224,9 +225,10 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
+                              v-bind:class="{ activeBtn: topic == 'nextSteps' }"
+
                             style="height: 100%; width: 100%; font-size: 1.5rem;"
-                            text-color="black"
-                            color="accent"
+                            color="primary"
                             label="Next Steps"
                             @click="makeActive($event, 'nextSteps')"
                           />
@@ -236,9 +238,10 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
+                                                    v-bind:class="{ activeBtn: topic == 'findHelp' }"
+
                             style="height: 100%; width: 100%; font-size: 1.5rem;"
-                            color="accent"
-                            text-color="black"
+                            color="primary"
                             label="Where to find Help"
                             @click="makeActive($event, 'findHelp')"
                           />
@@ -248,9 +251,9 @@
                       <transition name="btn-slide">
                         <div class="col q-my-xs" style="width: 100%;">
                           <q-btn
+                                v-bind:class="{ activeBtn: topic == 'moreInfo' }"
                             style="height: 100%; width: 100%; font-size: 1.5rem;"
-                            text-color="black"
-                            color="accent"
+                            color="primary"
                             label="Get More Information"
                             @click="makeActive($event, 'moreInfo')"
                           />
@@ -339,5 +342,13 @@ export default {
 .content-btn{
     border: 1px transparent solid; 
   border-radius: 25px;
+}
+
+
+.activeBtn{
+
+margin-left: 60px;
+background-color: #6a1b9a !important;
+
 }
 </style>
